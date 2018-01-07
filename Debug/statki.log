@@ -1,0 +1,4 @@
+﻿  pole.cpp
+f:\studia\semestr 3\cpp\projekt\statki\statki\pole.cpp(112): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  statki.vcxproj -> F:\studia\Semestr 3\cpp\projekt\statki\Debug\statki.exe
+  statki.vcxproj -> F:\studia\Semestr 3\cpp\projekt\statki\Debug\statki.pdb (Full PDB)
