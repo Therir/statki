@@ -5,20 +5,22 @@
 
 Statek::Statek()
 {
-	this->rozmiar = 0;
+	this->rozmiar = 1;
 	this->zycieStracone = 0;
 	this->zatopiony = false;
 	this->narysowany = false;
-	sprite = wszystkieSprites.statekSprite;
+	this->poziomy = false;
+	this->ustawiony = false;
+	sprite = wszystkieSprites.statek1Sprite;
 }
 
 Statek::Statek(int rozmiar)
 {
-	this->rozmiar = rozmiar;
+	
 	this->zycieStracone = 0;
 	this->zatopiony = false;
 	this->narysowany = false;
-	sprite = wszystkieSprites.statekSprite;
+	ustawRozmiar(rozmiar);
 
 }
 
@@ -38,6 +40,8 @@ bool Statek::czyZatopiony()
 void Statek::ustawRozmiar(int rozmiarNowy)
 {
 	this->rozmiar = rozmiarNowy;
+	ustawSprite();
+		
 }
 
 void Statek::ustawPozycje(int wGora,int kGora) // w - wiersz, k - kolumna
@@ -80,6 +84,11 @@ bool Statek::czyPoziomy()
 	return poziomy;
 }
 
+bool Statek::czyUstawiony()
+{
+	return this->ustawiony;
+}
+
 void Statek::trafiony()
 {
 	this->zycieStracone--;
@@ -117,4 +126,33 @@ void Statek::drawStatek(sf::RenderWindow & w, int pozX, int pozY)
 	
 	sprite.setPosition(59 + pozX, 500);
 	w.draw(sprite);
+}
+
+void Statek::ustawSprite()
+{
+		switch (this->rozmiar) {
+	case 1:
+		sprite = wszystkieSprites.statek1Sprite;
+		break;
+	case 2:
+		sprite = wszystkieSprites.statek2Sprite;
+		break;
+	case 3:
+		sprite = wszystkieSprites.statek3Sprite;
+		break;
+	case 4:
+		sprite = wszystkieSprites.statek4Sprite;
+	}
+}
+
+void Statek::ustawPola(int rozmiar, int wiersz, int kolumna)
+{
+		this->pola[rozmiar].first = wiersz;
+		this->pola[rozmiar].second = kolumna;
+
+}
+
+void Statek::ustaw()
+{
+	this->ustawiony = true;
 }

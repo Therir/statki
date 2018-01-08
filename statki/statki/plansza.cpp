@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "plansza.h"
+#include <iostream>
 
 
 plansza::plansza()
@@ -28,69 +29,119 @@ plansza::~plansza()
 
 bool plansza::ustawStatek(int wiersz, int kolumna, int num)
 {
-	Statek * statek;
-	statek = &S[num];
-	if (sprawdzOkolice(wiersz, kolumna, num, statek)) {
-		if (statek->czyPoziomy()) {
-			for (int i = 0; i < statek->zwrocRozmiar(); i++) {//petla do ustawiania statku, zaznacza ze statek znajduje sie na odpowiednich polach
-				statek->ustawPozycje(wiersz, kolumna);
-				P[wiersz][kolumna+i].umiescStatek(statek);
+	if (!(this->S[num].czyUstawiony())) {
+		if (sprawdzOkolice(wiersz, kolumna, num)) {
+			if (S[num].czyPoziomy()) {
+				for (int i = 0; i < S[num].zwrocRozmiar(); i++) {//petla do ustawiania statku, zaznacza ze statek znajduje sie na odpowiednich polach
+					S[num].ustawPozycje(wiersz, kolumna);
+					P[wiersz][kolumna + i].bStatek = true;
+					S[num].ustawPola(i, wiersz, kolumna);
+					S[num].ustaw();
+				}
+				return true;
 			}
-			return true;
+			else {
+				for (int i = 0; i < S[num].zwrocRozmiar(); i++) {
+					S[num].ustawPozycje(wiersz, kolumna);
+					P[wiersz + i][kolumna].umiescStatek(true);
+					S[num].ustawPola(i, wiersz, kolumna);
+					S[num].ustaw();
+				}
+				return true;
+			}
+			this->S[num].ustawPozycje(wiersz, kolumna);
 		}
 		else {
-			for (int i = 0; i < statek->zwrocRozmiar(); i++) {
-				statek->ustawPozycje(wiersz, kolumna);
-				P[wiersz + i][kolumna].umiescStatek(statek);
-			}
-			return true;
+			return false;
 		}
-		statek->ustawPozycje(wiersz, kolumna);
 	}
-	else {
-		return false;
-	}
-	
+	else return false;
 }
 
-bool plansza::sprawdzOkolice(int wiersz, int kolumna, int num, Statek * st)
+bool plansza::sprawdzOkolice(int wiersz, int kolumna, int num)
 {
-	if (st->czyPoziomy()) {
+	if (this->S[num].czyPoziomy()) {
 		for (int i = -1; i < 2; i++) {//od -1 bo musi sprawdzic pole u gory, pole ktore jest wybrane i pole u dolu
 			for (int j = -1; j < this->S[num].zwrocRozmiar() + 1; j++) {//analogicznie jak petla wyzej, tylko sprawdza po dlugosci statku czy zadne pole nie jest zajete
 				if (czyWgranicach(wiersz, kolumna, i, j)) {
-					if (!(this->P[wiersz + i][kolumna + j].czyStatek())) {
+					if (!(czyStatek(wiersz + i, kolumna + j))) {
 						this->puste = true;
 					}
 					else {
 						this->puste = false;
 					}
+					if (!(this->puste)) { //jezeli nie jest puste to od razu wyrzuca mozliwosc umieszczenia statku
+						return false;
+					}
 
+				}
+				else {
+					//std::cout << "poza granicami";
+					return false;
 				}
 			}
 		}
 	}
 	else {//tak samo jak wyzej tylko jesli statek jest pionowy
-		for (int i = -1; this->S[num].zwrocRozmiar() + 1; i++) {
+		for (int i = -1; i < this->S[num].zwrocRozmiar() + 1; i++) {
 			for (int j = -1; j < 2; j++) {
 				if (czyWgranicach(wiersz, kolumna, i, j)) {
-					if (!(this->P[wiersz + i][kolumna + j].czyStatek())) {
+					if (wiersz + i > 9 || wiersz + i < 0) {
+						if (kolumna + j > 9 || kolumna + j < 0) {
+							this->puste = true;
+							std::cout << "Jestem tu";
+						}
+					}
+					else if (!(czyStatek(wiersz + i, kolumna + j))) {//jezeli nie ma statku (bstatek = false) to zaprzeczeczenie czyli wchodzi do srodka
+						std::cout << "\nWiersz w petli: " << wiersz + i << "kolumna w petli: " << kolumna + j << "bstatek" << czyStatek(wiersz + i, kolumna + i);
 						this->puste = true;
 					}
 					else {
-						this->puste = false;
+						this->puste = false; 
+					}
+					if (!(this->puste)) {
+						return false;
 					}
 
+				}
+				else {
+					return false;
 				}
 			}
 
 		}
-		return puste;
 	}
 }
 
 bool plansza::czyWgranicach(int wiersz, int kolumna, int i, int j)
 {
+	if (wiersz + i > 9 && kolumna + j < 0 ) {
+		return true;
+	}
+	if (wiersz + i > 9 &&  kolumna + j > 9) {
+		return true;
+		
+	}
+	if (wiersz + i < 0 && kolumna + j < 0 ) {
+		return true;
+	}
+	if (wiersz + i < 0 && kolumna + j > 9) {
+		return true;
+	}
+	if (wiersz + i > 9 && kolumna + j >= 0 && kolumna + j <= 9) {
+		return true;
+	}
+	if (wiersz + i < 0 && kolumna + j >= 0 && kolumna + j <= 9) {
+		return true;
+	}
+
+	if (wiersz + i >= 0 && wiersz + i <= 9 && kolumna + j > 9 ){
+		return true;
+	}
+	if (wiersz + i >= 0 && wiersz + i <= 9 && kolumna + j < 0) {
+		return true;
+	}
+
 	if (wiersz + i >= 0 && wiersz + i <= 9 && kolumna + j >= 0 && kolumna + j <= 9) {
 		return true;
 	}
@@ -164,9 +215,9 @@ void plansza::strzal(pole *)
 {
 }
 
-pole * plansza::zwrocPole(int wiersz, int kolumna)
+pole plansza::zwrocPole(int wiersz, int kolumna)
 {
-	return nullptr;
+	return this->P[wiersz][kolumna];
 }
 
 Statek plansza::zwrocStatek(int num)
@@ -177,6 +228,11 @@ Statek plansza::zwrocStatek(int num)
 sf::Sprite plansza::zwrocSprite(int num)
 {
 	return S[num].sprite;
+}
+
+sf::Sprite plansza::zwrocSpritePola(int i, int j)
+{
+	return P[i][j].sprite;
 }
 
 void plansza::ustawPozycjeSprite(int num, int pozX, int pozY)

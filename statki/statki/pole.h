@@ -14,16 +14,20 @@ public:
 	void ustawPozycje(int x, int y, bool gotowe);
 	std::pair <int, int> zwrocPozycje(); 
 	bool zatopiony();
-	void umiescStatek(Statek * nowy);
+	//void umiescStatek(Statek * nowy);
+	void umiescStatek(bool nStatek);
 	void usunStatek();
 	Statek * zwrocStatek();
 	Sprites wszystkieSprites;
 	sf::Sprite sprite;
 	void drawPole(sf::RenderWindow &w, int pozX, int pozY);
+	bool bStatek;
 private:
 	bool trafienie;
 	bool pudlo;
 	int xpoz, ypoz;
 	Statek * mStatek;
+	
+	
 };
 

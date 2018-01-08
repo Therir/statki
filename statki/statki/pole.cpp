@@ -14,6 +14,7 @@ pole::pole()
 	ypoz = 0;
 	sprite = wszystkieSprites.poleSprite;
 	this->mStatek = NULL; //pokazuje czy statek jest na polu - domyslnie nie
+	bStatek = false;
 }
 
 
@@ -47,8 +48,7 @@ void pole::strzal()
 
 bool pole::czyStatek()
 {
-	if (mStatek != NULL) return true;
-	else return false;
+	return bStatek;
 }
 
 void pole::ustawPozycje(int x, int y, bool gotowe)
@@ -76,15 +76,21 @@ bool pole::zatopiony()
 	}
 }
 
-void pole::umiescStatek(Statek * nowy)
+/*void pole::umiescStatek(Statek *nowy)
 {
 	if (mStatek == NULL) {
-		this->mStatek = nowy;
-		sprite = wszystkieSprites.statekSprite;
+		mStatek = nowy;
+		//mStatek->ustawSprite();
 	}
 	else {
 		std::cout << "Na tym polu juz jest statek";
 	}
+}*/
+
+void pole::umiescStatek(bool nStatek)
+{
+	this->bStatek = nStatek;
+	sprite = wszystkieSprites.statek1Sprite;
 }
 
 
@@ -103,6 +109,6 @@ Statek * pole::zwrocStatek()
 void pole::drawPole(sf::RenderWindow & w,int pozX, int pozY)
 {
 	
-	sprite.setPosition(this->xpoz*59+10+pozX,this->ypoz*43+ 10+pozY);
+	sprite.setPosition(this->xpoz*70+pozX,this->ypoz*70+pozY);
 	w.draw(sprite);
 }

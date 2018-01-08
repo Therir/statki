@@ -4,15 +4,22 @@
 
 Sprites::Sprites()
 {
-	trafionyTexture.loadFromFile("pole_trafione.png");
-	pudloTexture.loadFromFile("pole_pudlo.png");
-	statekTexture.loadFromFile("statek.png");
-	poleTexture.loadFromFile("pole.png");
-	planszaTexture.loadFromFile("grid.png");
+	trafionyTexture.loadFromFile("img/statek_trafiony.png");
+	pudloTexture.loadFromFile("img/pole_pudlo.png");
+	statek1Texture.loadFromFile("img/statek1.png");
+	statek2Texture.loadFromFile("img/statek2.png");
+	statek3Texture.loadFromFile("img/statek3.png");
+	statek4Texture.loadFromFile("img/statek4.png");
+
+	poleTexture.loadFromFile("img/pole.png");
+	planszaTexture.loadFromFile("img/grid.png");
 
 	trafionySprite.setTexture(trafionyTexture);
 	pudloSprite.setTexture(pudloTexture);
-	statekSprite.setTexture(statekTexture);
+	statek1Sprite.setTexture(statek1Texture);
+	statek2Sprite.setTexture(statek2Texture);
+	statek3Sprite.setTexture(statek3Texture);
+	statek4Sprite.setTexture(statek4Texture);
 	poleSprite.setTexture(poleTexture);
 	planszaSprite.setTexture(planszaTexture);
 
