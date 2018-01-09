@@ -11,19 +11,24 @@ public:
 	bool czyPudlo();
 	void strzal();
 	bool czyStatek();
-	void ustawPozycje(int x, int y, bool gotowe);
+	void ustawPozycje(int x, int y);
 	std::pair <int, int> zwrocPozycje(); 
-	bool zatopiony();
-	void umiescStatek(Statek * nowy);
+	//bool zatopiony();
+	int zwrocRozmiarStatku();
+	//void umiescStatek(Statek * nowy);
+	void umiescStatek(bool nStatek, int rozmiar);
 	void usunStatek();
 	Statek * zwrocStatek();
 	Sprites wszystkieSprites;
 	sf::Sprite sprite;
 	void drawPole(sf::RenderWindow &w, int pozX, int pozY);
+	bool bStatek;
 private:
 	bool trafienie;
 	bool pudlo;
 	int xpoz, ypoz;
 	Statek * mStatek;
+	int wielkoscStatku;
+	
 };
 

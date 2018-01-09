@@ -5,20 +5,22 @@
 
 Statek::Statek()
 {
-	this->rozmiar = 0;
+	this->rozmiar = 1;
 	this->zycieStracone = 0;
 	this->zatopiony = false;
 	this->narysowany = false;
-	sprite = wszystkieSprites.statekSprite;
+	this->poziomy = true;
+	this->ustawiony = false;
+	sprite = wszystkieSprites.statek1Sprite;
 }
 
 Statek::Statek(int rozmiar)
 {
-	this->rozmiar = rozmiar;
+	
 	this->zycieStracone = 0;
 	this->zatopiony = false;
 	this->narysowany = false;
-	sprite = wszystkieSprites.statekSprite;
+	ustawRozmiar(rozmiar);
 
 }
 
@@ -38,6 +40,8 @@ bool Statek::czyZatopiony()
 void Statek::ustawRozmiar(int rozmiarNowy)
 {
 	this->rozmiar = rozmiarNowy;
+	ustawSprite();
+		
 }
 
 void Statek::ustawPozycje(int wGora,int kGora) // w - wiersz, k - kolumna
@@ -57,9 +61,13 @@ void Statek::ustawPozycje(int wGora,int kGora) // w - wiersz, k - kolumna
 void Statek::ustawOrientacje(bool poziom)
 {
 	this->poziomy = poziom;
-	if (this->poziomy) {
+	if (!(poziom)) {
 		sprite.setOrigin(0, 0);
 		sprite.setRotation(90);
+	}
+	else {
+		sprite.setOrigin(0, 0);
+		sprite.setRotation(0);
 	}
 }
 
@@ -77,7 +85,12 @@ int Statek::zwrocRozmiar()
 
 bool Statek::czyPoziomy()
 {
-	return poziomy;
+	return this->poziomy;
+}
+
+bool Statek::czyUstawiony()
+{
+	return this->ustawiony;
 }
 
 void Statek::trafiony()
@@ -88,33 +101,40 @@ void Statek::trafiony()
 	}
 }
 
-void Statek::rysujStatek(sf::RenderWindow &w, bool gotowe, int rozmiar)
-{
-	//TODO:Zrobic druga klase tylko do rysowania w silniku, ta moze byc tylko do pierwszego ustawienia np w przyborniku jakims czy cos
-	//TODO:Przeniesc do jakiegos ustaw sprite albo cos
-	this->rozmiar = rozmiar;
-	switch (this->rozmiar) {
-	case 1:
-		sprite = wszystkieSprites.pudloSprite;
-		break;
-	case 2:
-		sprite = wszystkieSprites.poleSprite;
-		break;
-	case 3:
-		sprite = wszystkieSprites.trafionySprite;
-		break;
-	case 4:
-		sprite = wszystkieSprites.planszaSprite;
-		break;
-	}
 
-	sprite.setScale(0.9f, 0.9f);
-	w.draw(sprite);
-}
 
 void Statek::drawStatek(sf::RenderWindow & w, int pozX, int pozY)
 {
 	
 	sprite.setPosition(59 + pozX, 500);
 	w.draw(sprite);
+}
+
+void Statek::ustawSprite()
+{
+		switch (this->rozmiar) {
+	case 1:
+		sprite = wszystkieSprites.statek1Sprite;
+		break;
+	case 2:
+		sprite = wszystkieSprites.statek2Sprite;
+		break;
+	case 3:
+		sprite = wszystkieSprites.statek3Sprite;
+		break;
+	case 4:
+		sprite = wszystkieSprites.statek4Sprite;
+	}
+}
+
+void Statek::ustawPola(int rozmiar, int wiersz, int kolumna)
+{
+		this->pola[rozmiar].first = wiersz;
+		this->pola[rozmiar].second = kolumna;
+
+}
+
+void Statek::ustaw()
+{
+	this->ustawiony = true;
 }

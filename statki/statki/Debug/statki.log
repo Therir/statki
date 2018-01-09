@@ -1,5 +1,13 @@
 ﻿  statki.cpp
-d:\studia\semestr 3\cpp\projekt\statki\statki\statki\statki.cpp(50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\studia\semestr 3\cpp\projekt\statki\statki\statki\statki.cpp(71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\studia\semestr 3\cpp\projekt\statki\statki\statki\statki.cpp(71): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\studia\semestr 3\cpp\projekt\statki\statki\statki\statki.cpp(116): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\studia\semestr 3\cpp\projekt\statki\statki\statki\statki.cpp(117): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\studia\semestr 3\cpp\projekt\statki\statki\statki\statki.cpp(118): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\studia\semestr 3\cpp\projekt\statki\statki\statki\statki.cpp(158): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\studia\semestr 3\cpp\projekt\statki\statki\statki\statki.cpp(163): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\studia\semestr 3\cpp\projekt\statki\statki\statki\statki.cpp(205): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\studia\semestr 3\cpp\projekt\statki\statki\statki\statki.cpp(206): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\studia\semestr 3\cpp\projekt\statki\statki\statki\statki.cpp(207): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\studia\semestr 3\cpp\projekt\statki\statki\statki\statki.cpp(251): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   statki.vcxproj -> D:\studia\semestr 3\CPP\projekt\statki\statki\Debug\statki.exe
   statki.vcxproj -> D:\studia\semestr 3\CPP\projekt\statki\statki\Debug\statki.pdb (Full PDB)

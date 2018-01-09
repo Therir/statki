@@ -147,6 +147,7 @@
     <ClInclude Include="gracz.h" />
     <ClInclude Include="plansza.h" />
     <ClInclude Include="pole.h" />
+    <ClInclude Include="przycisk.h" />
     <ClInclude Include="silnik.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="statek.h" />
@@ -157,6 +158,7 @@
     <ClCompile Include="gracz.cpp" />
     <ClCompile Include="plansza.cpp" />
     <ClCompile Include="pole.cpp" />
+    <ClCompile Include="przycisk.cpp" />
     <ClCompile Include="silnik.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="statek.cpp" />
