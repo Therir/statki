@@ -19,7 +19,6 @@ public:
 	bool czyPoziomy();
 	bool czyUstawiony();
 	void trafiony();
-	void rysujStatek(sf::RenderWindow &w, bool gotowe, int rozmiar);
 	void drawStatek(sf::RenderWindow &w, int pozX, int pozY);
 	void ustawSprite();
 	void ustawPola(int rozmiar,int wiersz, int kolumna);

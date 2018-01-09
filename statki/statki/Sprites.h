@@ -12,6 +12,7 @@ public:
 	sf::Sprite statek4Sprite;
 	sf::Sprite poleSprite;
 	sf::Sprite planszaSprite;
+	sf::Sprite przyciskSprite;
 
 	~Sprites();
 private:
@@ -23,5 +24,6 @@ private:
 	sf::Texture statek4Texture;
 	sf::Texture poleTexture;
 	sf::Texture planszaTexture;
+	sf::Texture przyciskTexture;
 };
 

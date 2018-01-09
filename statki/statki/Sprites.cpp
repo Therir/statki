@@ -11,9 +11,11 @@ Sprites::Sprites()
 	statek3Texture.loadFromFile("img/statek3.png");
 	statek4Texture.loadFromFile("img/statek4.png");
 
+	przyciskTexture.loadFromFile("img/przycisk.png");
 	poleTexture.loadFromFile("img/pole.png");
 	planszaTexture.loadFromFile("img/grid.png");
 
+	przyciskSprite.setTexture(przyciskTexture);
 	trafionySprite.setTexture(trafionyTexture);
 	pudloSprite.setTexture(pudloTexture);
 	statek1Sprite.setTexture(statek1Texture);

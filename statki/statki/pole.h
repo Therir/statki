@@ -11,11 +11,12 @@ public:
 	bool czyPudlo();
 	void strzal();
 	bool czyStatek();
-	void ustawPozycje(int x, int y, bool gotowe);
+	void ustawPozycje(int x, int y);
 	std::pair <int, int> zwrocPozycje(); 
-	bool zatopiony();
+	//bool zatopiony();
+	int zwrocRozmiarStatku();
 	//void umiescStatek(Statek * nowy);
-	void umiescStatek(bool nStatek);
+	void umiescStatek(bool nStatek, int rozmiar);
 	void usunStatek();
 	Statek * zwrocStatek();
 	Sprites wszystkieSprites;
@@ -27,7 +28,7 @@ private:
 	bool pudlo;
 	int xpoz, ypoz;
 	Statek * mStatek;
-	
+	int wielkoscStatku;
 	
 };
 

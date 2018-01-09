@@ -13,8 +13,9 @@ pole::pole()
 	xpoz = 0;
 	ypoz = 0;
 	sprite = wszystkieSprites.poleSprite;
-	this->mStatek = NULL; //pokazuje czy statek jest na polu - domyslnie nie
+	//this->mStatek = NULL; //pokazuje czy statek jest na polu - domyslnie nie
 	bStatek = false;
+	wielkoscStatku = 0;
 }
 
 
@@ -34,14 +35,13 @@ bool pole::czyPudlo()
 
 void pole::strzal()
 {
-	trafienie = true;
+	this->trafienie = true;
 	if (this->czyStatek()) {
-		pudlo = false;
-		mStatek->trafiony();
+		this->pudlo = false;
 		sprite = wszystkieSprites.trafionySprite;
 	}
 	else {
-		pudlo = true;
+		this->pudlo = true;
 		sprite = wszystkieSprites.pudloSprite;
 	}
 }
@@ -51,7 +51,7 @@ bool pole::czyStatek()
 	return bStatek;
 }
 
-void pole::ustawPozycje(int x, int y, bool gotowe)
+void pole::ustawPozycje(int x, int y)
 {
 	xpoz = x;
 	ypoz = y;
@@ -65,7 +65,7 @@ std::pair<int, int> pole::zwrocPozycje()
 	return std::pair<int, int>(xpoz, ypoz);
 }
 
-bool pole::zatopiony()
+/*bool pole::zatopiony()
 {
 	if (mStatek != NULL) {
 		return (mStatek->czyZatopiony());
@@ -74,6 +74,11 @@ bool pole::zatopiony()
 	else {
 		return false;
 	}
+}*/
+
+int pole::zwrocRozmiarStatku()
+{
+	return this->wielkoscStatku;
 }
 
 /*void pole::umiescStatek(Statek *nowy)
@@ -87,8 +92,9 @@ bool pole::zatopiony()
 	}
 }*/
 
-void pole::umiescStatek(bool nStatek)
+void pole::umiescStatek(bool nStatek,int rozmiar)
 {
+	this->wielkoscStatku = rozmiar;
 	this->bStatek = nStatek;
 	sprite = wszystkieSprites.statek1Sprite;
 }

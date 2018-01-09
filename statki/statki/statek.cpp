@@ -9,7 +9,7 @@ Statek::Statek()
 	this->zycieStracone = 0;
 	this->zatopiony = false;
 	this->narysowany = false;
-	this->poziomy = false;
+	this->poziomy = true;
 	this->ustawiony = false;
 	sprite = wszystkieSprites.statek1Sprite;
 }
@@ -61,9 +61,13 @@ void Statek::ustawPozycje(int wGora,int kGora) // w - wiersz, k - kolumna
 void Statek::ustawOrientacje(bool poziom)
 {
 	this->poziomy = poziom;
-	if (this->poziomy) {
+	if (!(poziom)) {
 		sprite.setOrigin(0, 0);
 		sprite.setRotation(90);
+	}
+	else {
+		sprite.setOrigin(0, 0);
+		sprite.setRotation(0);
 	}
 }
 
@@ -81,7 +85,7 @@ int Statek::zwrocRozmiar()
 
 bool Statek::czyPoziomy()
 {
-	return poziomy;
+	return this->poziomy;
 }
 
 bool Statek::czyUstawiony()
@@ -97,29 +101,7 @@ void Statek::trafiony()
 	}
 }
 
-void Statek::rysujStatek(sf::RenderWindow &w, bool gotowe, int rozmiar)
-{
-	//TODO:Zrobic druga klase tylko do rysowania w silniku, ta moze byc tylko do pierwszego ustawienia np w przyborniku jakims czy cos
-	//TODO:Przeniesc do jakiegos ustaw sprite albo cos
-	this->rozmiar = rozmiar;
-	switch (this->rozmiar) {
-	case 1:
-		sprite = wszystkieSprites.pudloSprite;
-		break;
-	case 2:
-		sprite = wszystkieSprites.poleSprite;
-		break;
-	case 3:
-		sprite = wszystkieSprites.trafionySprite;
-		break;
-	case 4:
-		sprite = wszystkieSprites.planszaSprite;
-		break;
-	}
 
-	sprite.setScale(0.9f, 0.9f);
-	w.draw(sprite);
-}
 
 void Statek::drawStatek(sf::RenderWindow & w, int pozX, int pozY)
 {

@@ -16,9 +16,10 @@ public:
 	bool czyTrafiony(int wiersz, int kolumna);//sprawdza czy dane pole bylo juz trafione
 	bool czyStatek(int wiersz, int kolumna);//sprawdza czy dane pole posiada statek
 	bool zmienMiejsce(int wiersz, int kolumna, int nWiersz, int nKolumna);
-	
+	bool czyWszystkieUstawione();
+	bool czyPlanszaUstawiona();
 
-	void strzal(int wiersz, int kolumna);//"strzela" w okreslone miejsce
+	bool strzal(int wiersz, int kolumna);//"strzela" w okreslone miejsce
 	void strzal(pole *); //strzela w wybrane pole
 	pole zwrocPole(int wiersz, int kolumna);//zwraca wybrane pole
 	Statek zwrocStatek(int num);//zwraca wybrany statek
@@ -26,8 +27,9 @@ public:
 	sf::Sprite zwrocSprite(int num);
 	sf::Sprite zwrocSpritePola(int i, int j);
 
+	void drawPlanszaUkryta(sf::RenderWindow &w, int pozX, int pozY);
 	void ustawPozycjeSprite(int num, int pozX, int pozY);
-
+	void ustawOrientacjeStatku(int num, bool poziom);
 	void drawPlansza(sf::RenderWindow &w, int pozX, int pozY);
 	void drawWybor(sf::RenderWindow &w, int pozX, int pozY);
 
@@ -39,7 +41,9 @@ public:
 private:
 	pole P[10][10];
 	Statek S[10];
-	bool gotowe;
+	bool planszaUstawiona;
 	bool puste;
+	int liczbaStatkow;
+	Sprites wszystkieSprites;
 };
 

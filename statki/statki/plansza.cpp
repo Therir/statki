@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "plansza.h"
 #include <iostream>
+#include "Sprites.h"
 
 
 plansza::plansza()
@@ -14,10 +15,10 @@ plansza::plansza()
 	for (int i = 6; i <= 10; i++) {
 		S[i].ustawRozmiar(1);
 	}
-	gotowe = true;
+	planszaUstawiona = false;
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
-			this->P[i][j].ustawPozycje(j, i, gotowe);
+			this->P[i][j].ustawPozycje(j, i);
 		}
 	}
 }
@@ -34,7 +35,7 @@ bool plansza::ustawStatek(int wiersz, int kolumna, int num)
 			if (S[num].czyPoziomy()) {
 				for (int i = 0; i < S[num].zwrocRozmiar(); i++) {//petla do ustawiania statku, zaznacza ze statek znajduje sie na odpowiednich polach
 					S[num].ustawPozycje(wiersz, kolumna);
-					P[wiersz][kolumna + i].bStatek = true;
+					P[wiersz][kolumna + i].umiescStatek(true, S[num].zwrocRozmiar());
 					S[num].ustawPola(i, wiersz, kolumna);
 					S[num].ustaw();
 				}
@@ -43,7 +44,7 @@ bool plansza::ustawStatek(int wiersz, int kolumna, int num)
 			else {
 				for (int i = 0; i < S[num].zwrocRozmiar(); i++) {
 					S[num].ustawPozycje(wiersz, kolumna);
-					P[wiersz + i][kolumna].umiescStatek(true);
+					P[wiersz + i][kolumna].umiescStatek(true,S[num].zwrocRozmiar());
 					S[num].ustawPola(i, wiersz, kolumna);
 					S[num].ustaw();
 				}
@@ -63,8 +64,24 @@ bool plansza::sprawdzOkolice(int wiersz, int kolumna, int num)
 	if (this->S[num].czyPoziomy()) {
 		for (int i = -1; i < 2; i++) {//od -1 bo musi sprawdzic pole u gory, pole ktore jest wybrane i pole u dolu
 			for (int j = -1; j < this->S[num].zwrocRozmiar() + 1; j++) {//analogicznie jak petla wyzej, tylko sprawdza po dlugosci statku czy zadne pole nie jest zajete
-				if (czyWgranicach(wiersz, kolumna, i, j)) {
-					if (!(czyStatek(wiersz + i, kolumna + j))) {
+				if (czyWgranicach(wiersz, kolumna, i, j)) {					
+					if (wiersz + i > 9 || wiersz + i < 0) {
+						if (kolumna + this->S[num].zwrocRozmiar() <= 10) {
+							this->puste = true;
+						}
+						else {
+							this->puste = false;
+						}
+					}
+					else if (kolumna + j > 9 || kolumna + j < 0) {
+						if (kolumna + this->S[num].zwrocRozmiar() <= 10) {
+							this->puste = true;
+						}
+						else {
+							this->puste = false;
+						}
+					}
+					else if (!(czyStatek(wiersz + i, kolumna + j))) {
 						this->puste = true;
 					}
 					else {
@@ -87,9 +104,19 @@ bool plansza::sprawdzOkolice(int wiersz, int kolumna, int num)
 			for (int j = -1; j < 2; j++) {
 				if (czyWgranicach(wiersz, kolumna, i, j)) {
 					if (wiersz + i > 9 || wiersz + i < 0) {
-						if (kolumna + j > 9 || kolumna + j < 0) {
+						if (wiersz + this->S[num].zwrocRozmiar() <= 10) {
 							this->puste = true;
-							std::cout << "Jestem tu";
+						}
+						else {
+							this->puste = false;
+						}
+					}
+					else if (kolumna + j > 9 || kolumna + j < 0) {
+						if (wiersz + this->S[num].zwrocRozmiar() <= 10) {
+							this->puste = true;
+						}
+						else {
+							this->puste = false;
 						}
 					}
 					else if (!(czyStatek(wiersz + i, kolumna + j))) {//jezeli nie ma statku (bstatek = false) to zaprzeczeczenie czyli wchodzi do srodka
@@ -97,7 +124,7 @@ bool plansza::sprawdzOkolice(int wiersz, int kolumna, int num)
 						this->puste = true;
 					}
 					else {
-						this->puste = false; 
+						this->puste = false;
 					}
 					if (!(this->puste)) {
 						return false;
@@ -115,14 +142,14 @@ bool plansza::sprawdzOkolice(int wiersz, int kolumna, int num)
 
 bool plansza::czyWgranicach(int wiersz, int kolumna, int i, int j)
 {
-	if (wiersz + i > 9 && kolumna + j < 0 ) {
+	if (wiersz + i > 9 && kolumna + j < 0) {
 		return true;
 	}
-	if (wiersz + i > 9 &&  kolumna + j > 9) {
+	if (wiersz + i > 9 && kolumna + j > 9) {
 		return true;
-		
+
 	}
-	if (wiersz + i < 0 && kolumna + j < 0 ) {
+	if (wiersz + i < 0 && kolumna + j < 0) {
 		return true;
 	}
 	if (wiersz + i < 0 && kolumna + j > 9) {
@@ -135,7 +162,7 @@ bool plansza::czyWgranicach(int wiersz, int kolumna, int i, int j)
 		return true;
 	}
 
-	if (wiersz + i >= 0 && wiersz + i <= 9 && kolumna + j > 9 ){
+	if (wiersz + i >= 0 && wiersz + i <= 9 && kolumna + j > 9) {
 		return true;
 	}
 	if (wiersz + i >= 0 && wiersz + i <= 9 && kolumna + j < 0) {
@@ -145,10 +172,10 @@ bool plansza::czyWgranicach(int wiersz, int kolumna, int i, int j)
 	if (wiersz + i >= 0 && wiersz + i <= 9 && kolumna + j >= 0 && kolumna + j <= 9) {
 		return true;
 	}
-	else{
-		return false; 
+	else {
+		return false;
 	}
-	
+
 }
 
 bool plansza::czyKoniec()
@@ -168,7 +195,7 @@ bool plansza::czyKoniec()
 bool plansza::czyTrafiony(int wiersz, int kolumna)
 {
 	return this->P[wiersz][kolumna].czyTrafiony(); //czy trafiony z pole.h
-	
+
 }
 
 bool plansza::czyStatek(int wiersz, int kolumna)
@@ -181,35 +208,59 @@ bool plansza::zmienMiejsce(int wiersz, int kolumna, int nWiersz, int nKolumna)
 	return false;
 }
 
-void plansza::strzal(int wiersz, int kolumna)
+bool plansza::czyWszystkieUstawione()
+{
+	bool ustawione;
+	int u = 0;
+	for (int i = 0; i < 10; i++) {
+		if (zwrocStatek(i).czyUstawiony()) {
+			u++;
+		}
+		else return false;
+	}
+	if (u == 10) {
+		ustawione = true;
+	}
+	return ustawione;
+}
+
+bool plansza::czyPlanszaUstawiona()
+{
+	if (czyWszystkieUstawione()) {
+		this->planszaUstawiona = true;
+	}
+	return this->planszaUstawiona;
+}
+
+
+bool plansza::strzal(int wiersz, int kolumna)
 {
 	this->P[wiersz][kolumna].strzal();
-	if (this->P[wiersz][kolumna].zatopiony()) {
-		Statek * nStatek;
-		nStatek = this->P[wiersz][kolumna].zwrocStatek();//zwraca obiekt statek ktory znajduje sie na danym polu
-		wiersz = nStatek->zwrocPozycje().first;//zwraca wiersz w jakiej zaczyna sie statek
-		kolumna = nStatek->zwrocPozycje().second;//zwraca kolumne w jakiej zaczyna sie statek
-		if (nStatek->czyPoziomy()) {
+	int n = P[wiersz][kolumna].zwrocRozmiarStatku();
+	if (!(this->S[n].czyZatopiony())) {
+		if (S[n].czyPoziomy()) {
 			for (int i = -1; i < 2; i++) {
-				for (int j = -1; j < nStatek->zwrocRozmiar() + 1; j++) {
+				for (int j = -1; j < n + 1; j++) {
 					if (czyWgranicach(wiersz, kolumna, i, j)) {
-						this->P[wiersz + i][kolumna + j].strzal();
-					}
-				}
-			}
-		}
-		else {
-			for (int i = -1; i < nStatek->zwrocRozmiar() + 1; i++) {
-				for (int j = -1; j < 2; j++) {
-					if (czyWgranicach(wiersz, kolumna, i, j)) {
-						this->P[wiersz + i][kolumna + j].strzal();
-
+						this->P[wiersz][kolumna].strzal();
+						return this->P[wiersz][kolumna].czyPudlo();
 					}
 				}
 			}
 		}
 	}
+		else {
+			for (int i = -1; i < n + 1; i++) {
+				for (int j = -1; j < 2; j++) {
+					if (czyWgranicach(wiersz, kolumna, i, j)) {
+						this->P[wiersz][kolumna].strzal();
+						return this->P[wiersz][kolumna].czyPudlo();
+					}
+				}
+			}
+		}
 }
+
 
 void plansza::strzal(pole *)
 {
@@ -222,7 +273,7 @@ pole plansza::zwrocPole(int wiersz, int kolumna)
 
 Statek plansza::zwrocStatek(int num)
 {
-	return S[num];
+	return this->S[num];
 }
 
 sf::Sprite plansza::zwrocSprite(int num)
@@ -240,12 +291,37 @@ void plansza::ustawPozycjeSprite(int num, int pozX, int pozY)
 	this->S[num].sprite.setPosition(pozX, pozY);
 }
 
-void plansza::drawPlansza(sf::RenderWindow &w,int pozX, int pozY)
+void plansza::ustawOrientacjeStatku(int num, bool poziom)
+{
+	this->S[num].ustawOrientacje(poziom);
+}
+
+void plansza::drawPlansza(sf::RenderWindow &w, int pozX, int pozY)
 {
 	for (int i = 0; i < 10; i++) {
-		
+
 		for (int j = 0; j < 10; j++) {
-			this->P[i][j].drawPole(w,pozX,pozY);
+			if (this->P[i][j].czyStatek()) {
+				if (!(this->P[i][j].czyTrafiony())) {
+					this->P[i][j].sprite = wszystkieSprites.statek1Sprite;
+				}
+			}
+			this->P[i][j].drawPole(w, pozX, pozY);
+		}
+	}
+}
+
+void plansza::drawPlanszaUkryta(sf::RenderWindow &w, int pozX, int pozY) 
+{
+	for (int i = 0; i < 10; i++) {
+
+		for (int j = 0; j < 10; j++) {
+			if (this->P[i][j].czyStatek()) {
+				if (!(this->P[i][j].czyTrafiony())) {
+					this->P[i][j].sprite = wszystkieSprites.poleSprite;
+				}
+			}
+			this->P[i][j].drawPole(w, pozX, pozY);
 		}
 	}
 }
@@ -253,7 +329,7 @@ void plansza::drawPlansza(sf::RenderWindow &w,int pozX, int pozY)
 void plansza::drawWybor(sf::RenderWindow & w, int pozX, int pozY)
 {
 	for (int i = 0; i < 10; i++) {
-		this->S[i].drawStatek(w, i*100, pozY);
+		this->S[i].drawStatek(w, i * 100, pozY);
 	}
 }
 
