@@ -44,19 +44,14 @@ void Statek::ustawRozmiar(int rozmiarNowy)
 		
 }
 
-void Statek::ustawPozycje(int wGora,int kGora) // w - wiersz, k - kolumna
+/*void Statek::ustawPozycje(int wiersz,int kolumna) // w - wiersz, k - kolumna
 {
-	this->gora.first = wGora;
-	this->gora.second = kGora;
-	if (this->poziomy) {
-		this->dol.first = gora.first + rozmiar - 1;
-		this->dol.second = gora.second;
+	for (int i = 0; i < this->rozmiar; i++) {
+		this->pola[i].first = wiersz;
+		this->pola[i].second = kolumna;
 	}
-	else {
-		this->dol.first = this->gora.first;
-		this->dol.second = this->gora.second + this->rozmiar -1;
-	}
-}
+
+}*/
 
 void Statek::ustawOrientacje(bool poziom)
 {
@@ -71,9 +66,9 @@ void Statek::ustawOrientacje(bool poziom)
 	}
 }
 
-std::pair<int, int> Statek::zwrocPozycje()
+std::pair<int, int> Statek::zwrocPozycje(int i)
 {
-	return std::pair<int, int>(this->gora.first,this->gora.second);
+	return std::pair<int, int>(this->pola[i].first,this->pola[i].second);//zwraca dane pole
 }
 
 int Statek::zwrocRozmiar()
@@ -137,4 +132,11 @@ void Statek::ustawPola(int rozmiar, int wiersz, int kolumna)
 void Statek::ustaw()
 {
 	this->ustawiony = true;
+}
+
+void Statek::zwrocWszystkiePola(std::pair<int, int> p[4])
+{
+	for (int i = 0; i < this->rozmiar; i++) {
+		p[i] = this->zwrocPozycje(i);
+	}
 }

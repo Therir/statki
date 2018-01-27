@@ -18,7 +18,7 @@ plansza::plansza()
 	planszaUstawiona = false;
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
-			this->P[i][j].ustawPozycje(j, i);
+			this->P[i][j].ustawPozycje(j, i);//TODO: czemu j,i a nie i,j?
 		}
 	}
 }
@@ -34,7 +34,7 @@ bool plansza::ustawStatek(int wiersz, int kolumna, int num)
 		if (sprawdzOkolice(wiersz, kolumna, num)) {
 			if (S[num].czyPoziomy()) {
 				for (int i = 0; i < S[num].zwrocRozmiar(); i++) {//petla do ustawiania statku, zaznacza ze statek znajduje sie na odpowiednich polach
-					S[num].ustawPozycje(wiersz, kolumna);
+					//S[num].ustawPozycje(wiersz, kolumna);
 					P[wiersz][kolumna + i].umiescStatek(true, S[num].zwrocRozmiar());
 					S[num].ustawPola(i, wiersz, kolumna);
 					S[num].ustaw();
@@ -43,18 +43,41 @@ bool plansza::ustawStatek(int wiersz, int kolumna, int num)
 			}
 			else {
 				for (int i = 0; i < S[num].zwrocRozmiar(); i++) {
-					S[num].ustawPozycje(wiersz, kolumna);
+				//	S[num].ustawPozycje(wiersz, kolumna);
 					P[wiersz + i][kolumna].umiescStatek(true,S[num].zwrocRozmiar());
 					S[num].ustawPola(i, wiersz, kolumna);
 					S[num].ustaw();
 				}
 				return true;
 			}
-			this->S[num].ustawPozycje(wiersz, kolumna);
+		//	this->S[num].ustawPozycje(wiersz, kolumna);
 		}
 		else {
 			return false;
 		}
+	}
+	else return false;
+}
+
+bool plansza::ustawStatekLosowo()
+{
+	static bool pierwszeLosowanie = true;
+	if (pierwszeLosowanie)
+	{
+		srand(time(NULL));
+		pierwszeLosowanie = false;
+	}
+	int wiersz = rand() % 10;
+	int kolumna = rand() % 10;
+	for (int num = 0; num <= 10; num++) {
+		while (!(sprawdzOkolice(wiersz, kolumna, num))) {
+			wiersz = rand() % 10;
+			kolumna = rand() % 10;
+		}
+		this->ustawStatek(wiersz, kolumna, num);
+	}
+	if (this->czyWszystkieUstawione()) {
+		return true;
 	}
 	else return false;
 }
@@ -138,6 +161,7 @@ bool plansza::sprawdzOkolice(int wiersz, int kolumna, int num)
 
 		}
 	}
+	return puste; //powinno zwrocic true jesli dojdzie do tego momentu
 }
 
 bool plansza::czyWgranicach(int wiersz, int kolumna, int i, int j)
@@ -236,13 +260,15 @@ bool plansza::czyPlanszaUstawiona()
 bool plansza::strzal(int wiersz, int kolumna)
 {
 	this->P[wiersz][kolumna].strzal();
-	int n = P[wiersz][kolumna].zwrocRozmiarStatku();
+	int n = this->zwrocStatek(wiersz, kolumna);
+	int r = this->S[n].zwrocRozmiar();
 	if (!(this->S[n].czyZatopiony())) {
 		if (S[n].czyPoziomy()) {
 			for (int i = -1; i < 2; i++) {
-				for (int j = -1; j < n + 1; j++) {
+				for (int j = -1; j < r + 1; j++) {
 					if (czyWgranicach(wiersz, kolumna, i, j)) {
 						this->P[wiersz][kolumna].strzal();
+						this->S[n].trafiony();
 						return this->P[wiersz][kolumna].czyPudlo();
 					}
 				}
@@ -250,10 +276,11 @@ bool plansza::strzal(int wiersz, int kolumna)
 		}
 	}
 		else {
-			for (int i = -1; i < n + 1; i++) {
+			for (int i = -1; i < r + 1; i++) {
 				for (int j = -1; j < 2; j++) {
 					if (czyWgranicach(wiersz, kolumna, i, j)) {
 						this->P[wiersz][kolumna].strzal();
+						this->S[n].trafiony();
 						return this->P[wiersz][kolumna].czyPudlo();
 					}
 				}
@@ -274,6 +301,19 @@ pole plansza::zwrocPole(int wiersz, int kolumna)
 Statek plansza::zwrocStatek(int num)
 {
 	return this->S[num];
+}
+
+int plansza::zwrocStatek(int wiersz, int kolumna)//zwroci indeks statku z tablicy S[10] ktory jest na tym polu
+{
+	std::pair <int, int> wk = std::make_pair(wiersz, kolumna);
+	for (int i = 0; i <= 10; i++) {
+		for(int j = 0; j<this->S[i].zwrocRozmiar();j++)
+		if (this->S[i].zwrocPozycje(j) == wk) {
+			return i;
+		}
+		else return -1;
+	}
+	return -1;
 }
 
 sf::Sprite plansza::zwrocSprite(int num)

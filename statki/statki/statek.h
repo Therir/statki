@@ -12,9 +12,9 @@ public:
 
 	bool czyZatopiony();//sprawdza czy statek jest zatopiony
 	void ustawRozmiar(int rozmiarNowy);//ustawia rozmiar statku
-	void ustawPozycje(int wGora,int kGora);//ustawia pozycje statku na planszy
+/*	void ustawPozycje(int wiersz,int kolumna);//ustawia pozycje statku na planszy*/
 	void ustawOrientacje(bool poziom);
-	std::pair <int, int> zwrocPozycje();
+	std::pair <int, int> zwrocPozycje(int i);
 	int zwrocRozmiar();
 	bool czyPoziomy();
 	bool czyUstawiony();
@@ -23,6 +23,7 @@ public:
 	void ustawSprite();
 	void ustawPola(int rozmiar,int wiersz, int kolumna);
 	void ustaw();
+	void zwrocWszystkiePola(std::pair <int, int> p[4]);
 	sf::Sprite sprite;
 	Sprites wszystkieSprites;
 private:

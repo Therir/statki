@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gracz.h" />
+    <ClInclude Include="komputer.h" />
     <ClInclude Include="plansza.h" />
     <ClInclude Include="pole.h" />
     <ClInclude Include="przycisk.h" />
@@ -156,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gracz.cpp" />
+    <ClCompile Include="komputer.cpp" />
     <ClCompile Include="plansza.cpp" />
     <ClCompile Include="pole.cpp" />
     <ClCompile Include="przycisk.cpp" />

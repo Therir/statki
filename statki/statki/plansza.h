@@ -9,6 +9,7 @@ public:
 	plansza();
 	~plansza();
 	bool ustawStatek(int wiersz, int kolumna, int num); //ustawia statek o numerze spod zmiennej num na planszy w miejscu wierszxkolumna
+	bool ustawStatekLosowo();//ustawaia wszystkie statki losowo, zaczyna od najwiêkszego
 	//bool zmienPozycje(int wiersz, int kolumna, int nWiersz, int nKolumna);
 	bool sprawdzOkolice(int wiersz, int kolumna, int num);//sprawdza czy na polach w okol tego gdzie bedzie statek nie ma innych statkow
 	bool czyWgranicach(int wiersz, int kolumna, int i, int j);//sprawdza czy statek bedzie w granicach planszy
@@ -23,6 +24,7 @@ public:
 	void strzal(pole *); //strzela w wybrane pole
 	pole zwrocPole(int wiersz, int kolumna);//zwraca wybrane pole
 	Statek zwrocStatek(int num);//zwraca wybrany statek
+	int zwrocStatek(int wiersz, int kolumna);//zwraca statek wyszukujac po kolumnie i wierszu
 
 	sf::Sprite zwrocSprite(int num);
 	sf::Sprite zwrocSpritePola(int i, int j);

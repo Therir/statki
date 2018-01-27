@@ -8,9 +8,10 @@
 #include "pole.h"
 #include <iostream>
 #include "przycisk.h"
+#include "silnik.h"
 int main()
 {
-	pole K;
+	/*pole K;
 	plansza P1;
 	plansza O1;
 	Statek S1(1);
@@ -53,7 +54,8 @@ int main()
 	int n = 0;
 	while (true)
 	{
-		
+	//	P1.ustawStatekLosowo();
+	//	O1.ustawStatekLosowo();
 		sf::Vector2i pozycjaMyszki = sf::Mouse::getPosition(window);
 		
 		
@@ -80,7 +82,7 @@ int main()
 								else {
 									naReset = false;
 								}*/
-								
+	/*							
 							
 						}
 					}
@@ -98,7 +100,7 @@ int main()
 					/*if (naReset) {
 						kliknij = true;
 					}*/
-				}
+	/*			}
 			}
 		}
 		if (event.type == sf::Event::MouseButtonReleased) {
@@ -170,7 +172,7 @@ int main()
 									naReset = false;
 									}*/
 
-								}
+		/*						}
 							}
 						}
 					}
@@ -187,7 +189,7 @@ int main()
 						/*if (naReset) {
 						kliknij = true;
 						}*/
-					}
+	/*				}
 				}
 			}
 			if (event.type == sf::Event::MouseButtonReleased) {
@@ -234,7 +236,7 @@ int main()
 
 		/*---------------- segment rozgrywki -------------------*/
 		//(pozycja myszki.x - 800) / 70
-		ustaw = false;
+	/*	ustaw = false;
 		tarcza = false;
 		if (p1Ustawiony && o1Ustawiony) {
 			//while (!(P1.czyKoniec()) || !(O1.czyKoniec())) {
@@ -321,14 +323,16 @@ int main()
 							}
 						}
 					}*/
-				}
+/*				}
 			//}
 		}
 		window.display();
 		}
 	//window.clear();
 	
-	
+	*/
+silnik gra;
+gra.uruchom();
     return 0;
 }
 
